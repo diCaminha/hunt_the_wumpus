@@ -49,17 +49,72 @@ for i in range(1,21):
 		counterLinks[random_sequency_caves[i]]+=1
 		counterLinks[random_sequency_caves[i+3]]+=1
 
+
+#Choosing the bats, pits and wumpus
+options_caves = random_sequency_caves
+bats = random.choice(options_caves)
+options_caves.remove(bats)
+pits = random.choice(options_caves)
+options_caves.remove(pits)
+wumpus = random.choice(options_caves)
+
 #testing choosing rooms
 game_over = False
+borders = []
+
+option = int(input("enter the number of the option you want\n"
+		+"1. choose a room to go\n"
+		+"2. guess where's the wumpus\n"))
+if option == 1:
+	curently_room = int(input("choose a room: "))
+	print("you are in ",curently_room)
+	
+	for i in range(1,21):
+		if(graph[curently_room][i] == 1):
+			borders.append(i)	
+		
+	print("you can move to: ")
+	print(borders)
+
 while not game_over:
 	option = int(input("enter the number of the option you want\n"
 		+"1. choose a room to go\n"
 		+"2. guess where's the wumpus\n"))
 	if option == 1:
+		
 		curently_room = int(input("choose a room: "))
-		print("you are in ",curently_room)
-		print("you can move to: ")
-		for i in range(1,21):
-			if(graph[curently_room][i] == 1):
-				print(i,end=' ')
-		print()
+		while(curently_room not in borders):
+			print("you must to choose a room among",borders)
+			curently_room = int(input("choose a room: "))
+
+		if curently_room == wumpus:
+			print("you're in the wumpus! GAME OVER!!!")
+			game_over = True	
+		elif curently_room == bats:
+			print("you're in the bats! GAME OVER!!!")
+			game_over = True
+		elif curently_room == wumpus:
+			print("you're in the pits! GAME OVER!!!")
+			game_over = True
+		
+		else:	 
+
+			print("you are in ",curently_room)
+			
+			borders = []	
+			for i in range(1,21):
+				if(graph[curently_room][i] == 1):
+					borders.append(i)	
+			
+	########Checking if there's a wumpus,bats or pits nearby the current cave
+			if wumpus in borders:
+				print("I smell a wumpus!")
+			if bats in borders:
+				print("Bats nearby!")
+			if pits in borders:
+				print("I fell a draft!")
+			
+	#########################################################
+			print("you can move to: ")
+			print(borders)
+
