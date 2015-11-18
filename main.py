@@ -4,27 +4,54 @@ import random
 # Creates a list containing 20 lists initialized to 0
 graph = [[0 for x in range(21)] for x in range(21)] 
 
-
 all_caves = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
 random_sequency_caves = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-copy_random_sequency_caves = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+wumpus = 0
+bats = 0
+pits = 0
 
-for i in range(1,21):
-	cave = random.choice(all_caves)
-	all_caves.remove(cave)
-	random_sequency_caves[i] = cave
-	copy_random_sequency_caves[i] = cave
+#Function to generate a randomly sequence of caves 
+def create_randomSequency_caves():
+	for i in range(1,21):
+		cave = random.choice(all_caves)
+		all_caves.remove(cave)
+		random_sequency_caves[i] = cave
+	random_sequency_caves.remove(0)
 
-#removing the number 0 extra in both tuple
-random_sequency_caves.remove(0)
-copy_random_sequency_caves.remove(0)
+#choose a cave for the wumpus
+#it should be different from the start cave
+def get_cave_for_wumpus(start_cave):
+	done = False
+	while not done:
+		wumpus = random.choice(random_sequency_caves)
+		if wumpus != start_cave:
+			done = True
+	return wumpus
 
-#Choosing the bats, pits and wumpus
-bats = random.choice(random_sequency_caves)
-random_sequency_caves.remove(bats)
-pits = random.choice(random_sequency_caves)
-random_sequency_caves.remove(pits)
-wumpus = random.choice(random_sequency_caves)
+#choose a cave for the bats
+# it should be different from the first chosen cave and from where the wumpus is
+def get_cave_for_bats(start_cave,wumpus_cave):
+	done = False
+	while not done:
+		bats = random.choice(random_sequency_caves)
+		if bats != start_cave and bats != wumpus_cave:
+			done = True
+	return bats
+
+#choose a cave for the bats
+# it should be different from the first chosen cave, also cannot be where the wumpus and the bats are!
+def get_cave_for_pits(start_cave,wumpus_cave,bats_cave):
+	done = False
+	while not done:
+		pits = random.choice(random_sequency_caves)
+		if pits != start_cave and pits != wumpus_cave and pits!=bats_cave:
+			done = True
+	return pits
+
+
+
+#call function to create the random sequency of caves
+create_randomSequency_caves()
 
 
 #Those represents the layers of the graph, 
@@ -34,25 +61,12 @@ layer2 = []
 layer3 = []
 
 
-########### CHOOSING RANDOMLY THE CAVES FOR EACH LAYER  #################
+########### CHOOSING THE CAVES FOR EACH LAYER  #################
 
-##choosing the caves for the first layer
-for i in range(5):
-	cave = random.choice(copy_random_sequency_caves)
-	layer1.append(cave)
-	copy_random_sequency_caves.remove(cave)
-
-##choosing the caves for the second layer
-for i in range(10):
-	cave = random.choice(copy_random_sequency_caves)
-	layer2.append(cave)
-	copy_random_sequency_caves.remove(cave)
-
-##choosing the caves for the third layer
-for i in range(5):
-	cave = random.choice(copy_random_sequency_caves)
-	layer3.append(cave)
-	copy_random_sequency_caves.remove(cave)
+##slicing the main list random_sequency_caves, for each layer
+layer1 = random_sequency_caves[0:5]
+layer2 = random_sequency_caves[5:15]
+layer3 = random_sequency_caves[15:20]
 
 
 
@@ -95,20 +109,27 @@ for i in range(5):
 game_over = False
 borders = []
 
-option = int(input("enter the number of the option you want\n"
-		+"1. choose a room to go\n"
-		+"2. guess where's the wumpus\n"))
-if option == 1:
-	curently_room = int(input("choose a room: "))
-	print("you are in ",curently_room)
-	
-	for i in range(1,21):
-		if(graph[curently_room][i] == 1):
-			borders.append(i)	
-		
-	print("you can move to: ")
-	print(borders)
+#GAME BEGINING - first choice of cave to start
+curently_room = int(input("choose a cave to start: "))
+print("you are in:",curently_room)
 
+#Getting caves to wumpus, pits and bats
+wumpus = get_cave_for_wumpus(curently_room)
+bats = get_cave_for_bats(curently_room,wumpus)
+pits = get_cave_for_pits(curently_room,bats,pits)
+
+print(wumpus,bats,pits)
+
+for i in range(1,21):
+	if(graph[curently_room][i] == 1):
+		borders.append(i)	
+
+print("you can move to: ")
+print(borders)
+
+## MAIN LOOP
+# the game will be running until the player guess where is the wumpus or 
+# if it's game over: come in a cave where the bats, pits or wumpus are.
 while not game_over:
 	option = int(input("enter the number of the option you want\n"
 		+"1. choose a room to go\n"
@@ -126,7 +147,7 @@ while not game_over:
 		elif curently_room == bats:
 			print("you're in the bats! GAME OVER!!!")
 			game_over = True
-		elif curently_room == wumpus:
+		elif curently_room == pits:
 			print("you're in the pits! GAME OVER!!!")
 			game_over = True
 		
