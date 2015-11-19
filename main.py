@@ -133,10 +133,15 @@ print(borders)
 while not game_over:
 	option = int(input("enter the number of the option you want\n"
 		+"1. choose a room to go\n"
-		+"2. guess where's the wumpus\n"))
+		+"2. shoot where's the wumpus\n"))
 	if option == 1:
 		
-		curently_room = int(input("choose a room: "))
+		borders = []
+		for i in range(1,21):
+			if(graph[curently_room][i] == 1):
+				borders.append(i)
+		
+		curently_room = int(input("choose a cave to go: "))
 		while(curently_room not in borders):
 			print("you must to choose a room among",borders)
 			curently_room = int(input("choose a room: "))
@@ -172,5 +177,56 @@ while not game_over:
 			
 			print("you can move to:",borders)
 			print()
-			
+	
+	## Shooting in the wumpus		
+	elif option == 2:
+		path = [curently_room]
+		previous_cave = curently_room
 
+		print("\nYou can create a path with 1-5 caves to kill the wumpus.")
+		done = False
+		while not done:
+			
+			cave = int(input("Enter the next cave of the path:"))
+			if cave in path:
+				print(" this cave is already in your path! Try another cave.")
+			elif cave not in borders:
+				print("this cave is not connected to the previous cave! Try another cave.")
+			else:
+				
+				path.append(cave)
+				borders = []	
+				for i in range(1,21):
+					if(graph[cave][i] == 1):
+						borders.append(i)
+				print("your path is:",path)
+				opt = int(input("choose what you want:\n1.SHOOT!\n2.add another cave"))
+				if opt == 1:
+					done = True
+				
+		##After shooting the arrow through the path
+		if path[-1] == wumpus:
+			print("YOU KILL THE WUMPUS!! YOU WIN!!")
+			game_over = True
+		else:
+			print("you miss the WUMPUS. WATCH OUT THE ARROW!!!")
+			#realocating the wumpus
+			isRealocated = False
+			while not isRealocated:
+				wumpus = random.choice(random_sequency_caves)
+				if not wumpus == bats or wumpus == pits:
+					isRealocated = True
+
+			#Checking where did the arrow go
+			borders = []
+			for i in range(1,21):
+					if(graph[path[-1]][i] == 1):
+						borders.append(i)
+
+			direction_arrow = random.choice(borders)
+			#if the direction of the arrow went to the direction of the path, you DIE.
+			if direction_arrow in path:
+				print("The arrow kill you! GAME OVER")
+				game_over = True
+			else:
+				print("the arrow went away! YOU SAFE.")	
