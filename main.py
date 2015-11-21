@@ -107,6 +107,7 @@ for i in range(5):
 
 
 game_over = False
+number_arrows = 5
 borders = []
 
 #GAME BEGINING - first choice of cave to start
@@ -116,7 +117,7 @@ print("you are in:",curently_room)
 #Getting caves to wumpus, pits and bats
 wumpus = get_cave_for_wumpus(curently_room)
 bats = get_cave_for_bats(curently_room,wumpus)
-pits = get_cave_for_pits(curently_room,bats,pits)
+pits = get_cave_for_pits(curently_room,wumpus,bats)
 
 print(wumpus,bats,pits)
 
@@ -136,7 +137,7 @@ while not game_over:
 		+"2. shoot where's the wumpus\n"))
 	if option == 1:
 		
-		borders = []
+		
 		for i in range(1,21):
 			if(graph[curently_room][i] == 1):
 				borders.append(i)
@@ -180,6 +181,12 @@ while not game_over:
 	
 	## Shooting in the wumpus		
 	elif option == 2:
+		#cleaning the borders	
+		borders = []	
+		for i in range(1,21):
+			if(graph[curently_room][i] == 1):
+				borders.append(i)
+		
 		path = [curently_room]
 		previous_cave = curently_room
 
@@ -195,6 +202,7 @@ while not game_over:
 			else:
 				
 				path.append(cave)
+				
 				borders = []	
 				for i in range(1,21):
 					if(graph[cave][i] == 1):
@@ -203,13 +211,17 @@ while not game_over:
 				opt = int(input("choose what you want:\n1.SHOOT!\n2.add another cave"))
 				if opt == 1:
 					done = True
-				
+		print(path)		
 		##After shooting the arrow through the path
 		if path[-1] == wumpus:
 			print("YOU KILL THE WUMPUS!! YOU WIN!!")
 			game_over = True
 		else:
-			print("you miss the WUMPUS. WATCH OUT THE ARROW!!!")
+			number_arrows -= 1
+			if(number_arrows < 1):
+				print("You don't have arrows anymore!!")
+				break
+			print("you miss the WUMPUS.\nNow you have ",number_arrows,"lefting!!")
 			#realocating the wumpus
 			isRealocated = False
 			while not isRealocated:
@@ -230,3 +242,5 @@ while not game_over:
 				game_over = True
 			else:
 				print("the arrow went away! YOU SAFE.")	
+
+			
