@@ -1,0 +1,119 @@
+body{
+	background-color: #013359;
+	padding-top: 70px;
+}
+
+.navbar-default{
+	background: rgba(1, 59, 81, 0.7);
+	padding: 10px;
+	border: none;
+	margin-bottom: 0;
+}
+
+.nav.navbar-nav.navbar-right a{
+	font-size: 18px;
+	color: white;
+}
+
+.nav.navbar-nav.navbar-right li a:hover{
+	text-decoration: underline;
+	color: white;
+}
+
+.back-image{
+	background-image: url(../images/background.jpg);
+	background-position: cover;
+	background-repeat: no-repeat;
+	height: auto;
+	background-size: 100%;
+	padding-top: 200px;
+	padding-bottom: 200px;
+
+	font-size: 50px;
+	color: white;
+	text-shadow: 3px 3px #000000;
+}
+
+.container-fluid.first{
+	background-color: #c7583c;
+	padding: 20px;
+	font-size: 16px;
+	color: #424242;
+}
+
+.container-fluid.second{
+	background-color: #fbbe67;
+	padding: 20px;
+}
+
+.well.col-md-3 {
+	background-color: #013b51;
+	border: none;
+	color: white;
+	box-shadow: inset 0px 0px 10px #888888;
+	height: 330px;
+	margin-left: 6%;
+}
+
+.container-fluid.third{
+	background-color: #adc29b;
+	padding: 20px;
+}
+
+.well.well-sm {
+	background-color: #9ab087;
+	border: none;
+}
+
+.form-control {
+	background-color: #E6ECE1;
+}
+
+#footer.footer{
+	position: static;
+	height: 60px;
+	bottom: 0;
+	width: 100%;
+	background-color: #013b51;
+}
+
+.scroll-top-wrapper {
+    position: fixed;
+    font-size: 20px;
+	opacity: 0;
+	visibility: hidden;
+	overflow: hidden;
+	text-align: center;
+	z-index: 99999999;
+    background-color: #013b51;
+	color: white;
+	width: 50px;
+	height: 48px;
+	line-height: 48px;
+	right: 30px;
+	bottom: 30px;
+	padding-top: 2px;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+	border-bottom-right-radius: 10px;
+	border-bottom-left-radius: 10px;
+	-webkit-transition: all 0.5s ease-in-out;
+	-moz-transition: all 0.5s ease-in-out;
+	-ms-transition: all 0.5s ease-in-out;
+	-o-transition: all 0.5s ease-in-out;
+	transition: all 0.5s ease-in-out;
+}
+.scroll-top-wrapper:hover {
+	background-color: #888888;
+}
+
+.scroll-top-wrapper.show {
+    visibility:visible;
+    cursor:pointer;
+	opacity: 1.0;
+}
+
+.scroll-top-wrapper i.fa {
+	line-height: inherit;
+}
+
