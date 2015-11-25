@@ -1,22 +1,15 @@
 import random
-
+import functions
 
 # Creates a list containing 20 lists initialized to 0
 graph = [[0 for x in range(21)] for x in range(21)] 
 
-all_caves = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
-random_sequency_caves = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+
 wumpus = 0
 bats = 0
 pits = 0
 
-#Function to generate a randomly sequence of caves 
-def create_randomSequency_caves():
-	for i in range(1,21):
-		cave = random.choice(all_caves)
-		all_caves.remove(cave)
-		random_sequency_caves[i] = cave
-	random_sequency_caves.remove(0)
+
 
 #choose a cave for the wumpus
 #it should be different from the start cave
@@ -51,7 +44,7 @@ def get_cave_for_pits(start_cave,wumpus_cave,bats_cave):
 
 
 #call function to create the random sequency of caves
-create_randomSequency_caves()
+random_sequency_caves = functions.create_randomSequency_caves()
 
 
 #Those represents the layers of the graph, 
@@ -136,7 +129,7 @@ while not game_over:
 		+"1. Choose a room\n"
 		+"2. Shoot the Wumpus\n"))
 	if option == 1:
-		
+		borders = []
 		
 		for i in range(1,21):
 			if(graph[curently_room][i] == 1):
@@ -151,8 +144,19 @@ while not game_over:
 			print("You're in the same room as the Wumpus! GAME OVER!!!")
 			game_over = True	
 		elif curently_room == bats:
-			print("You're in a room with bats! GAME OVER!!!")
-			game_over = True
+			print("You're in a room with bats! They moved you to different room!!!")
+			#player location change 
+			curently_room = random.choice(random_sequency_caves)
+			if curently_room == wumpus or curently_room == pits:
+				print("Ups....you got KILLED....")
+				game_over = True
+			else:
+				borders = []
+				for i in range(1,21):
+					if(graph[curently_room][i] == 1):
+						borders.append(i)
+				print("You are in ", curently_room)
+				print("You can move to: ", borders)
 		elif curently_room == pits:
 			print("You feel in a pit! GAME OVER!!!")
 			game_over = True
@@ -193,12 +197,13 @@ while not game_over:
 		print("\nYou can create a path of 1-5 caves to kill the Wumpus.")
 		done = False
 		while not done:
-			
+			print("Caves available: ,", borders)
 			cave = int(input("Enter the next cave in your path:"))
 			if cave in path:
 				print("This cave is already in your path! Try another cave.")
 			elif cave not in borders:
 				print("This cave is not connected to the previous cave! Try another cave.")
+				print(borders)
 			else:
 				
 				path.append(cave)
@@ -241,6 +246,7 @@ while not game_over:
 				print("The arrow came back and killed you! GAME OVER")
 				game_over = True
 			else:
-				print("The arrow went away! YOU'RE SAFE.")	
-
+				print("The arrow went away! YOU'RE SAFE.")
+	else:
+		print("Invalid input. Try to choose another option")
 			
