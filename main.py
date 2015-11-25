@@ -5,44 +5,6 @@ import functions
 graph = [[0 for x in range(21)] for x in range(21)] 
 
 
-wumpus = 0
-bats = 0
-pits = 0
-
-
-
-#choose a cave for the wumpus
-#it should be different from the start cave
-def get_cave_for_wumpus(start_cave):
-	done = False
-	while not done:
-		wumpus = random.choice(random_sequency_caves)
-		if wumpus != start_cave:
-			done = True
-	return wumpus
-
-#choose a cave for the bats
-# it should be different from the first chosen cave and from where the wumpus is
-def get_cave_for_bats(start_cave,wumpus_cave):
-	done = False
-	while not done:
-		bats = random.choice(random_sequency_caves)
-		if bats != start_cave and bats != wumpus_cave:
-			done = True
-	return bats
-
-#choose a cave for the bats
-# it should be different from the first chosen cave, also cannot be where the wumpus and the bats are!
-def get_cave_for_pits(start_cave,wumpus_cave,bats_cave):
-	done = False
-	while not done:
-		pits = random.choice(random_sequency_caves)
-		if pits != start_cave and pits != wumpus_cave and pits!=bats_cave:
-			done = True
-	return pits
-
-
-
 #call function to create the random sequency of caves
 random_sequency_caves = functions.create_randomSequency_caves()
 
@@ -99,6 +61,30 @@ for i in range(5):
 ########### END FILLING THE GRAPH #########
 
 
+############Welcome Message################
+print("""\t\t Welcome to HUNT the WUMPUS!
+		 The overal goal of the game is to find your way 
+		 through a maze of caves and find the Wumpus
+		 and kill him without dying.
+
+		 You start with 5 arrows.
+
+		 You may choose a room or choose to fire an arrow
+		 on every turn.
+
+		 An arrow can travel up to 3 rooms.
+
+		 If you pick a room that has bats, they will 
+		 teleport youto the random room in the maze.
+
+		 If you pick a room that is a botomless pit, GAME OVER!
+
+		 When you shoot an arrow, the rooms you pick
+		 MUST be connected to each other. 
+
+		 ENJOY PLAYING!!!!""")
+
+
 game_over = False
 number_arrows = 5
 borders = []
@@ -108,9 +94,9 @@ curently_room = int(input("Choose a cave to start in: "))
 print("You are in:",curently_room)
 
 #Getting caves to wumpus, pits and bats
-wumpus = get_cave_for_wumpus(curently_room)
-bats = get_cave_for_bats(curently_room,wumpus)
-pits = get_cave_for_pits(curently_room,wumpus,bats)
+wumpus = functions.get_cave_for_wumpus(curently_room)
+bats = functions.get_cave_for_bats(curently_room,wumpus)
+pits = functions.get_cave_for_pits(curently_room,wumpus,bats)
 
 print(wumpus,bats,pits)
 
