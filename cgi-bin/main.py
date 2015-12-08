@@ -134,7 +134,7 @@ while not game_over:
 			#player location change 
 			curently_room = random.choice(random_sequency_caves)
 			if curently_room == wumpus or curently_room == pits:
-				print("Oops....you got KILLED....")
+				print("Ups....you got KILLED....")
 				game_over = True
 			else:
 				borders = []
