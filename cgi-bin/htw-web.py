@@ -50,10 +50,11 @@ arrows = cookie['Arrows'].value
 option = cookie['Option'].value
 gameOver = cookie['GameOver'].value
 
+
 if (option) == "m":
-	print("Move")
+	print("Player chose to move")
 elif (option) == "s":
-	print("Shoot")
+	print("Player chose to shoot")
 	
 print("<p>Wumpus: ", wumpus, "<br />Pits: ", pits, "<br />Bats: ", bats, "</p>")
 # Check if game has already ended. If so redirect them to start game over
@@ -97,6 +98,7 @@ else:
 	# Display current player status #
 	print("<p>You are in room # ", room, "</p>")	
 	print("<p>You can move to rooms ", borders, "</p>")
+	print("<p>You have ", arrows, " arrow(s) left</p>")
 
 	# Check and display if Wumpus, Bats, or Pits are nearby #
 	if str(wumpus) in borders:
