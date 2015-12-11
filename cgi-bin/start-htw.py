@@ -99,21 +99,25 @@ cookie['Bats'] = bats
 cookie['Pits'] = pits
 cookie['Room'] = curently_room
 cookie['Option'] = 1
+cookie['GameOver'] = 0
 
 print(cookie)
 print('Content-Type: text/html')
 print()
 print('<html><body>')
 
+if (cookie['GameOver'].value == 1):
+	print("<p>Sorry, you lost. :(</p>")
+	print("<a href='../start.html'>Click here to start over</a>")
+else:
+	print("<p>You are in room # ", cookie['Room'].value, "</p>")
+	print("<p>You can move to rooms ", cookie['Borders'].value, "</p>")
 
-print("<p>You are in room # ", cookie['Room'].value, "</p>")
-print("<p>You can move to rooms ", cookie['Borders'].value, "</p>")
 
-
-print('''<form method='get' action='/cgi-bin/htw-web.py'>
-      <input class='form-control no-border-radius' type='text' name='option' placeholder='Enter m or s'/>
-      <input class='form-control no-border-radius' type='text' name='room' placeholder='Enter room number(s)'/>
-	    <input class='btn btn-default no-border-radius' style='margin-top: 5px;' type='submit' value='Submit' />
-		  </form>''')
+	print('''<form method='get' action='/cgi-bin/htw-web.py'>
+		  <input class='form-control no-border-radius' type='text' name='option' placeholder='Enter m or s'/>
+		  <input class='form-control no-border-radius' type='text' name='room' placeholder='Enter room number(s)'/>
+			<input class='btn btn-default no-border-radius' style='margin-top: 5px;' type='submit' value='Submit' />
+			  </form>''')
 
 print("</body></html>")

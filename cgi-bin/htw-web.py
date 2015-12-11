@@ -40,11 +40,21 @@ bats = cookie['Bats'].value
 pits = cookie['Pits'].value
 arrows = cookie['Arrows'].value
 option = cookie['Option'].value
-print(wumpus)
-print(bats)
+gameOver = cookie['GameOver'].value
 
-if (room == wumpus):
-	print("You ended up in the same room as the Wumpus. Game Over!")
+print("<p>Wumpus: ", wumpus, "<br />Pits: ", pits, "<br />Bats: ", bats, "</p>")
+# Check if game has already ended. If so redirect them to start game over
+if (cookie['GameOver'].value == 1):
+	print("<p>Sorry, you lost. :(</p>")
+	print("<a href='../start.html'>Click here to start over</a>")
+
+# Check if player is in same room as Wumpus	
+elif (room == wumpus):
+	cookie['GameOver'] = 1
+	print("<p>You ended up in the same room as the Wumpus. Game Over!</p>")
+	print("<a href='../start.html'>Click here to start over</a>")
+
+# Check if player is in the same room as the Pits	
 elif (str(room) in str(pits)):
 	print("You fell into a pit. Game Over!")
 #elif (str(room) in str(bats)):
@@ -54,7 +64,8 @@ elif (str(room) in str(pits)):
 		#print("Oops...you died. Game Over!")
 	#else:
 		#cookie['Room'] = room
-	
+
+# Player is in empty room, continue game	
 else:
 	# Display current player status #
 	print("<p>You are in room # ", room, "</p>")	
