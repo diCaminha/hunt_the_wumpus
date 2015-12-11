@@ -30,15 +30,17 @@ print('<html><body>')
 room = cookie['Room'].value
 graph = cookie['Graph'].value
 borders = cookie['Borders'].value
-#borders = []	
-#for i in range(1,20):
-	#if(graph[int(room)][i] == 1):
-		#borders.append(i)
+borders = []	
+for i in range (1,21):
+	if(graph[int(room)][i] == 1):
+		borders.append(str(i))
 wumpus = cookie['Wumpus'].value
 bats = cookie['Bats'].value
 pits = cookie['Pits'].value
 arrows = cookie['Arrows'].value
 option = cookie['Option'].value
+print(wumpus)
+print(bats)
 
 if (room == wumpus):
 	print("You ended up in the same room as the Wumpus. Game Over!")
