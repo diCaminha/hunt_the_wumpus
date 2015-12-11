@@ -17,24 +17,32 @@ else:
     
 cgitb.enable()
 
-form = cgi.FieldStorage()
-formRoom = form.getvalue("room")	
+random_sequency_caves = functions.create_randomSequency_caves()
 
+form = cgi.FieldStorage()
+form2 = cgi.FieldStorage()
+formRoom = form.getvalue("room")
+formOption = form2.getvalue("option")
 cookie['Room'] = formRoom
+cookie['Option'] = formOption
+room = cookie['Room'].value
+
+
+graph = eval(cookie['Graph'].value)
+	
+borders = []	
+for i in range (1,21):
+	if(graph[int(room)][i] == 1):
+		borders.append(str(i))
+
+		
 
 print('Content-Type: text/html')
 print(cookie)
 print()
 print('<html><body>')
 
-room = cookie['Room'].value
-graph = cookie['Graph'].value
-newGraph = eval(graph)
-borders = cookie['Borders'].value
-borders = []	
-for i in range (1,21):
-	if(newGraph[int(room)][i] == 1):
-		borders.append(str(i))
+option = cookie['Option'].value	
 wumpus = cookie['Wumpus'].value
 bats = cookie['Bats'].value
 pits = cookie['Pits'].value
@@ -42,28 +50,47 @@ arrows = cookie['Arrows'].value
 option = cookie['Option'].value
 gameOver = cookie['GameOver'].value
 
+if (option) == "m":
+	print("Move")
+elif (option) == "s":
+	print("Shoot")
+	
 print("<p>Wumpus: ", wumpus, "<br />Pits: ", pits, "<br />Bats: ", bats, "</p>")
 # Check if game has already ended. If so redirect them to start game over
-if (cookie['GameOver'].value == 1):
+if (gameOver == 1):
 	print("<p>Sorry, you lost. :(</p>")
 	print("<a href='../start.html'>Click here to start over</a>")
 
 # Check if player is in same room as Wumpus	
 elif (room == wumpus):
 	cookie['GameOver'] = 1
+	print(gameOver)
 	print("<p>You ended up in the same room as the Wumpus. Game Over!</p>")
 	print("<a href='../start.html'>Click here to start over</a>")
 
 # Check if player is in the same room as the Pits	
 elif (str(room) in str(pits)):
+	cookie['GameOver'] = 1
 	print("You fell into a pit. Game Over!")
+	print("<a href='../start.html'>Click here to start over</a>")
+
+# Check if player is in the same room as the bats
 #elif (str(room) in str(bats)):
-	#print("You're in a room with bats. They've moved you to a new room!")
-	#room = random.choice(start-htw.random_sequency_caves)
-	#if (room == wumpus or str(room) in str(pits)):
-		#print("Oops...you died. Game Over!")
+	#room = random.choice(random_sequency_caves)
+	#if (room == wumpus):
+		#cookie['GameOver'] = 1
+		#print("<p>You landed in a room with bats and they flew you to the Wumpus. :( Game over.</p>"
+		#print("<a href='../start.html'>Click here to start over</a>")
+	#elif (str(room) in str(pits)):
+		#cookie['GameOver'] = 1
+		#print("<p>You landed in a room with bats and they flew you into a pit. :( Game over.</p>")
+		#print("<a href='../start.html'>Click here to start over</a>")
 	#else:
 		#cookie['Room'] = room
+		#print("You're in a room with bats. They've moved you to a new room!")
+		#print("<a href='htw-web.py'>Click here to continue</a>")
+		#print(cookie)
+	
 
 # Player is in empty room, continue game	
 else:
