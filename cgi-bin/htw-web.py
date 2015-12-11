@@ -29,10 +29,11 @@ print('<html><body>')
 
 room = cookie['Room'].value
 graph = cookie['Graph'].value
+newGraph = eval(graph)
 borders = cookie['Borders'].value
 borders = []	
 for i in range (1,21):
-	if(graph[int(room)][i] == 1):
+	if(newGraph[int(room)][i] == 1):
 		borders.append(str(i))
 wumpus = cookie['Wumpus'].value
 bats = cookie['Bats'].value

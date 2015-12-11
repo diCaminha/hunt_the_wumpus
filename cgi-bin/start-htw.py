@@ -109,6 +109,7 @@ print('<html><body>')
 print("<p>You are in room # ", cookie['Room'].value, "</p>")
 print("<p>You can move to rooms ", cookie['Borders'].value, "</p>")
 
+
 print('''<form method='get' action='/cgi-bin/htw-web.py'>
       <input class='form-control no-border-radius' type='text' name='option' placeholder='Enter m or s'/>
       <input class='form-control no-border-radius' type='text' name='room' placeholder='Enter room number(s)'/>
