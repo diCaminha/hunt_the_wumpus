@@ -1,0 +1,14 @@
+body {
+	background: url("background.png");
+	font-family: 'PT Sans', sans-serif;
+	color: #ffffff !important;
+}
+
+.center-div {
+	width: 500px;
+	margin: 0 auto;
+}
+
+.no-border-radius {
+	border-radius: 0;
+}

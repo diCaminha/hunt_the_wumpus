@@ -23,7 +23,7 @@ form = cgi.FieldStorage()
 form2 = cgi.FieldStorage()
 formRoom = form.getvalue("room")
 formOption = form2.getvalue("option")
-cookie['Room'] = formRoom
+cookie['Room'] = formRoom.strip( ' ' )
 cookie['Option'] = formOption
 room = cookie['Room'].value
 
@@ -33,7 +33,7 @@ graph = eval(cookie['Graph'].value)
 borders = []	
 for i in range (1,21):
 	if(graph[int(room)][i] == 1):
-		borders.append(str(i))
+		borders.append(i)
 
 		
 
@@ -42,6 +42,13 @@ print(cookie)
 print()
 print('<html><body>')
 
+# HTML styles and stuff
+print('''<head><title>Hunt the Wumpus!</title></head>
+<link href='../includes/style.css' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
+<link href='includes/Bootstrap/css/bootstrap.min.css' rel='stylesheet' type='text/css'>
+<script type='text/javascript' src='includes/Bootstrap/js/bootstrap.min.js'></script>''')
+
 option = cookie['Option'].value	
 wumpus = cookie['Wumpus'].value
 bats = cookie['Bats'].value
@@ -49,12 +56,6 @@ pits = cookie['Pits'].value
 arrows = cookie['Arrows'].value
 option = cookie['Option'].value
 gameOver = cookie['GameOver'].value
-
-
-if (option) == "m":
-	print("Player chose to move")
-elif (option) == "s":
-	print("Player chose to shoot")
 	
 print("<p>Wumpus: ", wumpus, "<br />Pits: ", pits, "<br />Bats: ", bats, "</p>")
 # Check if game has already ended. If so redirect them to start game over
@@ -101,18 +102,24 @@ else:
 	print("<p>You have ", arrows, " arrow(s) left</p>")
 
 	# Check and display if Wumpus, Bats, or Pits are nearby #
-	if str(wumpus) in borders:
+	if str(wumpus) in str(borders):
 		print("<p>I smell a wumpus!</p>")
-	if str(bats) in borders:
+	if str(bats) in str(borders):
 		print("<p>Bats nearby!</p>")
-	if str(pits) in borders:
+	if str(pits) in str(borders):
 		print("<p>I feel a draft!</p>")
 		
-	print('''<form method='get' action='/cgi-bin/htw-web.py'>
-    <input class='form-control no-border-radius' type='text' name='option' placeholder='Enter m or s'/>
-    <input class='form-control no-border-radius' type='text' name='room' placeholder='Enter room number(s)'/>
-    <input class='btn btn-default no-border-radius' style='margin-top: 5px;' type='submit' value='Submit' />
-	  </form>''')
+	print("<form method='get' action='/cgi-bin/htw-web.py'>")
+	print("Choose an option: ")
+	print("<select name='option'>")
+	print("<option value='m'>Move</option>")
+	print("<option value='s'>Shoot</option>")
+	print("</select><br />")
+	print("Pick a room: ")
+	print("<select name='room'>")
+	for i in range (0,3):
+		print("<option value='{0}'>{1}</option>".format(borders[i], borders[i]))
+	print("</select><br /><input class='btn btn-default no-border-radius' style='margin-top: 5px;' type='submit' value='Submit' /></form>")
 
 
 
