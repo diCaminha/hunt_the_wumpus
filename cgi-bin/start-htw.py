@@ -114,12 +114,20 @@ print('''<head><title>Hunt the Wumpus!</title></head>
 <script type='text/javascript' src='includes/Bootstrap/js/bootstrap.min.js'></script>''')
 
 
-if (cookie['GameOver'].value == 1):
+if (cookie['GameOver'].value == '1'):
 	print("<p>Sorry, you lost. :(</p>")
 	print("<a href='../start.html'>Click here to start over</a>")
 else:
 	print("<p>You are in room # ", cookie['Room'].value, "</p>")
 	print("<p>You can move to rooms ", cookie['Borders'].value, "</p>")
+	
+	# Check and display if Wumpus, Bats, or Pits are nearby #
+	if int(wumpus) in borders:
+		print("<p>I smell a wumpus!</p>")
+	if int(bats) in borders:
+		print("<p>Bats nearby!</p>")
+	if int(pits) in borders:
+		print("<p>I feel a draft!</p>")
 
 
 	print("<form method='get' action='/cgi-bin/htw-web.py'>")
