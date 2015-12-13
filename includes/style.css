@@ -12,3 +12,11 @@ body {
 .no-border-radius {
 	border-radius: 0;
 }
+
+.jumbotron {
+	margin-top: 25px;
+}
+
+.jumbotron p {
+	color: #404040 !important;
+}

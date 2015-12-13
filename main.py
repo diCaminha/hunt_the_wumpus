@@ -75,9 +75,9 @@ print("""\t\t Welcome to HUNT the WUMPUS!
 		 An arrow can travel up to 3 rooms.
 
 		 If you pick a room that has bats, they will 
-		 teleport youto the random room in the maze.
+		 teleport you to a random room in the maze.
 
-		 If you pick a room that is a botomless pit, GAME OVER!
+		 If you pick a room that is a bottomless pit, GAME OVER!
 
 		 When you shoot an arrow, the rooms you pick
 		 MUST be connected to each other. 
@@ -144,7 +144,7 @@ while not game_over:
 				print("You are in ", curently_room)
 				print("You can move to: ", borders)
 		elif curently_room == pits:
-			print("You feel in a pit! GAME OVER!!!")
+			print("You fell in a pit! GAME OVER!!!")
 			game_over = True
 		
 		else:	 
