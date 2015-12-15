@@ -6,12 +6,12 @@
  You start with 5 arrows.
 
  You may choose a room or choose to fire an arrow
- ###on every turn.
+ on every turn.
 
  An arrow can travel up to 3 rooms.
 
  If you pick a room that has bats, they will 
- ###teleport youto the random room in the maze.
+ teleport youto the random room in the maze.
 
  If you pick a room that is a botomless pit, GAME OVER!
 
