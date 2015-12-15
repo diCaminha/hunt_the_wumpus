@@ -98,7 +98,8 @@ wumpus = functions.get_cave_for_wumpus(curently_room)
 bats = functions.get_cave_for_bats(curently_room,wumpus)
 pits = functions.get_cave_for_pits(curently_room,wumpus,bats)
 
-print(wumpus,bats,pits)
+print("For demonstration purposes: location of wumpus, location of bats, and location of pits")
+print(wumpus, bats,pits)
 
 for i in range(1,21):
 	if(graph[curently_room][i] == 1):
